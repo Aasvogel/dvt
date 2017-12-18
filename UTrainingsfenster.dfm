@@ -2,7 +2,7 @@ object Trainingsfenster: TTrainingsfenster
   Left = 229
   Top = 64
   Caption = 'Trainingsfenster'
-  ClientHeight = 842
+  ClientHeight = 841
   ClientWidth = 1584
   Color = 13750737
   Constraints.MaxHeight = 900

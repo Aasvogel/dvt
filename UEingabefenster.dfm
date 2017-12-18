@@ -1,9 +1,9 @@
 object Eingabefenster: TEingabefenster
   Left = 230
   Top = 114
-  Width = 828
-  Height = 630
   Caption = 'Eingabefenster'
+  ClientHeight = 571
+  ClientWidth = 812
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -203,7 +203,7 @@ object Eingabefenster: TEingabefenster
       OnClick = MenSchliessenClick
     end
     object Exit1: TMenuItem
-      Caption = 'E&xit+speichern'
+      Caption = 'Speichern && E&xit'
       OnClick = Exit1Click
     end
   end

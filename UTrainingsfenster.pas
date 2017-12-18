@@ -34,7 +34,7 @@ type
   private
     SeiteNr, WortZl, BildZl, FehlwortListenZl, FalschWortZl: Integer;
     Auswahlreihe: Array[1..40]of Integer;
-    RichtigGeuebt, Geuebt: Boolean;
+    f_zeigeKorrektesWortAn, Geuebt: Boolean;
     VorgabeDaten, ZeroDatenRekord: TWortRekord;
     BildArray: Array[1..100]of string[30];
     Bildname, Bildtitel: string;
@@ -142,7 +142,7 @@ var
   s: string;
 begin
   If SeiteNr <> 0 then ZuArbeitArray(SeiteNr);
-  RichtigGeuebt:= true; {solange kein Fehlversuch gelaufen}
+  f_zeigeKorrektesWortAn:= false; {solange kein Fehlversuch gelaufen}
   FehlwortListenZl:= -1;
   SetCursorPos(0,0);
   NullSeitenAnzeige;
@@ -207,10 +207,12 @@ begin
   If VorgabenRekord.Sprache = 'f' then  Key:= FranzBuchstaben(Key);{aendert deutsche Tasten in FranzBuchstaben}
   If Key = #13 then
   begin
-    If RichtigGeuebt then AuswertungA     {wenn richtig}
+    If not f_zeigeKorrektesWortAn then
+      AuswertungA     {wenn richtig}
     else
     begin                                    {wenn falsch}
-      LaKAWort.Caption:= ''; RichtigGeuebt:= true;
+      LaKAWort.Caption:= '';
+      f_zeigeKorrektesWortAn:= false;
       Trainingweiter;
     end;
     Key:= #0;
@@ -223,10 +225,12 @@ procedure TTrainingsfenster.EdDWortKeyPress(Sender: TObject;
 begin
   If Key = #13 then
   begin
-    if RichtigGeuebt then AuswertungD
+    if not f_zeigeKorrektesWortAn then
+      AuswertungD
     else
     begin
-      LaKDWort.Caption:= ''; RichtigGeuebt:= true;
+      LaKDWort.Caption:= '';
+      f_zeigeKorrektesWortAn:= false;
       Trainingweiter;
     end;
     Key:= #0;
@@ -238,13 +242,19 @@ procedure TTrainingsfenster.AuswertungA;
 begin
   If EdAWort.Text = Vorgabedaten.AWort then                    {if richtig:}
   begin
-    {OkSound;} RichtigGeuebt:= true; UpdateAuswahlreihe;
+    {OkSound;}
+    f_zeigeKorrektesWortAn:= false;
+    UpdateAuswahlreihe;
   end
-  else begin                                                   {if falsch:}
-    inc(FalschWortZl); InFehlwortListe(Vorgabedaten.AWort);
+  else
+  begin                                                   {if falsch:}
+    inc(FalschWortZl);
+    InFehlwortListe(Vorgabedaten.AWort);
     LaKAWort.Caption:= Vorgabedaten.AWort;
-    RichtigGeuebt:= false; UpdateAuswahlreihe;
-    If SeiteNr <> 0 then InZeroliste;
+    f_zeigeKorrektesWortAn:= true;
+    UpdateAuswahlreihe;
+    If SeiteNr <> 0 then
+      InZeroliste;
     {FalseSound; }
   end;
 end;
@@ -255,13 +265,16 @@ begin
   If EdDWort.Text = Vorgabedaten.DWort then                     {if richtig:}
     begin
       {OkSound; }
-      RichtigGeuebt:= true; UpdateAuswahlreihe;
+      f_zeigeKorrektesWortAn:= false;
+      UpdateAuswahlreihe;
     end
   else begin                                                    {if falsch:}
     {FalseSound; }
-    inc(FalschWortZl); InFehlwortListe(Vorgabedaten.DWort);
+    inc(FalschWortZl);
+    InFehlwortListe(Vorgabedaten.DWort);
     LaKDWort.Caption:= Vorgabedaten.DWort;
-    RichtigGeuebt:= false; UpdateAuswahlreihe;
+    f_zeigeKorrektesWortAn:= true;
+    UpdateAuswahlreihe;
     If VorgabenRekord.Sprache = 'e' then if VorgabenRekord.SeitArrE[1]<> 0 then InZeroliste;
     If VorgabenRekord.Sprache = 'f' then if VorgabenRekord.SeitArrF[1]<> 0 then InZeroliste;
   end;
@@ -276,24 +289,17 @@ begin
   If WortZl > 0 then Trainingsvorgabe else
   begin
     If VorgabenRekord.Sprache = 'e' then
-    begin
       SNr:= VorgabenRekord.SeitArrE[1];
-      If FalschWortZl = 0 then AusArbeitArray(SNr);   {loescht Seiteneintrag}
-              {------------------ Ende, nicht Nullseite ----------------}
-      if SNr <> 0 then Trainingsende
-      else
-        NullseitenTrainingsEnde;
-    end;
 
     If VorgabenRekord.Sprache = 'f' then
-    begin
       SNr:= VorgabenRekord.SeitArrF[1];
-      If FalschWortZl = 0 then AusArbeitArray(SNr);   {loescht Seiteneintrag}
-              {------------------ Ende, nicht Nullseite ----------------}
-      if SNr <> 0 then Trainingsende
-      else
-        NullseitenTrainingsEnde;
-    end;
+
+    If FalschWortZl = 0 then AusArbeitArray(SNr);   {loescht Seiteneintrag}
+
+    if SNr <> 0 then
+      Trainingsende
+    else
+      NullseitenTrainingsEnde;
   end;
 end;
 
@@ -322,7 +328,7 @@ begin
     If Auswahlreihe[Loop]<>0 then WortZl:= Loop;
   For Loop:= 1 to WortZl do
     Auswahlreihe[Loop]:= Auswahlreihe[Loop+1];
-  If RichtigGeuebt then
+  If not f_zeigeKorrektesWortAn then
   begin
     Auswahlreihe[WortZl]:= 0; dec(WortZl);
     Trainingweiter;
@@ -435,14 +441,15 @@ begin
   If VorgabenRekord.Sprache = 'f' then Datnam := 'Seite0.dtf';
   Stream := TFileStream.Create(Datnam, fmCreate);
   Stream.Free;
-  Zeroliste.free; Zeroliste:= TList.Create;
+  Zeroliste.free;
+  Zeroliste:= TList.Create;
 end;
 
 
 procedure TTrainingsfenster.NullseitenTrainingsEnde;
 begin
   PaTraining.Visible:= false;  //Trainingspanel wird ausgeblendet
-  If MessageDlgPos('Nullseite beibehalten?',mtConfirmation, [mbNo, mbOk], 0, 200, 500) = mrNo // 0, 100, 700  => 21' Monitor
+  If MessageDlgPos('Nullseite löschen?',mtConfirmation, [mbYes, mbNo], 0, 200, 500) = mrYes // 0, 100, 700  => 21' Monitor
     then NullSeiteLeerSpeichern;
   close;
   bTraining:= false;           //Trainingsprozess inaktiv

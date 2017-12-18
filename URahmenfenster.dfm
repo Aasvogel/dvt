@@ -54,7 +54,7 @@ object Rahmenfenster: TRahmenfenster
     Transparent = True
   end
   object Label2: TLabel
-    Left = 402
+    Left = 450
     Top = 125
     Width = 82
     Height = 17
@@ -105,177 +105,184 @@ object Rahmenfenster: TRahmenfenster
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Panel1: TPanel
-    Left = 149
-    Top = 121
-    Width = 206
-    Height = 92
-    Color = 13750750
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clMoneyGreen
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    ParentFont = False
+  object pnlPanelholder: TPanel
+    Left = 77
+    Top = 106
+    Width = 348
+    Height = 129
     TabOrder = 0
-    OnClick = TrainierenClick
-    object Label5: TLabel
-      Left = 18
-      Top = 24
-      Width = 173
-      Height = 49
-      Caption = 'Trainieren'
-      Color = 6579300
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clMedGray
-      Font.Height = -35
-      Font.Name = 'Comic Sans MS'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      Transparent = True
-      OnClick = TrainierenClick
-    end
-    object Label3: TLabel
-      Left = -184
-      Top = 54
-      Width = 162
-      Height = 41
-      Caption = 'Trainieren'
-      Color = 6579300
-      Font.Charset = ANSI_CHARSET
-      Font.Color = 16512
-      Font.Height = -35
-      Font.Name = 'Arial'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      Transparent = True
-    end
-    object Label4: TLabel
-      Left = 14
-      Top = 18
-      Width = 173
-      Height = 49
-      Caption = 'Trainieren'
-      Color = 6579300
-      Font.Charset = ANSI_CHARSET
-      Font.Color = 176
-      Font.Height = -35
-      Font.Name = 'Comic Sans MS'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      Transparent = True
-      OnClick = TrainierenClick
-    end
-  end
-  object PanWortzahl: TPanel
-    Left = 133
-    Top = 114
-    Width = 247
-    Height = 115
-    Color = 15124164
-    TabOrder = 1
-    Visible = False
-    OnClick = PanWortzahlClick
-    object LaWortZl: TLabel
-      Left = 31
-      Top = 27
-      Width = 185
-      Height = 23
-      Caption = #220'bungswortzahl eingeben'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Comic Sans MS'
-      Font.Style = []
-      ParentFont = False
-    end
-    object EdWortzahl: TEdit
-      Left = 106
-      Top = 61
-      Width = 30
-      Height = 35
-      Color = clScrollBar
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clGray
-      Font.Height = -19
-      Font.Name = 'Comic Sans MS'
-      Font.Style = [fsBold]
-      ParentFont = False
+    object PanWortzahl: TPanel
+      Left = 1
+      Top = 1
+      Width = 346
+      Height = 127
+      Align = alClient
+      BevelOuter = bvNone
+      Color = 15124164
       TabOrder = 0
-      Text = ' '
-      OnKeyDown = EdWortzahlKeyDown
-      OnKeyPress = EdWortzahlKeyPress
+      Visible = False
+      OnClick = PanWortzahlClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 348
+      ExplicitHeight = 129
+      object LaWortZl: TLabel
+        Left = 87
+        Top = 19
+        Width = 185
+        Height = 23
+        Caption = #220'bungswortzahl eingeben'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Comic Sans MS'
+        Font.Style = []
+        ParentFont = False
+      end
+      object EdWortzahl: TEdit
+        Left = 170
+        Top = 61
+        Width = 30
+        Height = 35
+        Color = clScrollBar
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clGray
+        Font.Height = -19
+        Font.Name = 'Comic Sans MS'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+        Text = ' '
+        OnKeyDown = EdWortzahlKeyDown
+        OnKeyPress = EdWortzahlKeyPress
+      end
     end
-  end
-  object PanSeitenzahl: TPanel
-    Left = 152
-    Top = 125
-    Width = 209
-    Height = 92
-    Color = 9145227
-    TabOrder = 2
-    Visible = False
-    object LabSeitEing: TLabel
-      Left = 35
-      Top = 127
-      Width = 178
-      Height = 26
-      Caption = 'Seitenzahl eingeben:'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -19
-      Font.Name = 'Comic Sans MS'
-      Font.Style = []
-      ParentFont = False
+    object PanSeitenzahl: TPanel
+      Left = 1
+      Top = 1
+      Width = 346
+      Height = 127
+      Align = alClient
+      BevelOuter = bvNone
+      Color = 9145227
+      TabOrder = 1
+      Visible = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 353
+      ExplicitHeight = 129
+      object LabSeite: TLabel
+        Left = 114
+        Top = 48
+        Width = 86
+        Height = 23
+        Caption = #220'bungseite:'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Comic Sans MS'
+        Font.Style = []
+        ParentFont = False
+      end
+      object EdSeite: TEdit
+        Left = 242
+        Top = 48
+        Width = 30
+        Height = 28
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        OnKeyPress = EdSeiteKeyPress
+      end
     end
-    object LabSeite: TLabel
-      Left = 35
-      Top = 32
-      Width = 86
-      Height = 23
-      Caption = #220'bungseite:'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Comic Sans MS'
-      Font.Style = []
-      ParentFont = False
-    end
-    object EdSeitenzahl: TEdit
-      Left = 226
-      Top = 127
-      Width = 33
-      Height = 29
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -15
-      Font.Name = 'Comic Sans MS'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 0
-      Text = ' '
-    end
-    object EdSeite: TEdit
-      Left = 142
-      Top = 30
-      Width = 30
-      Height = 28
+    object pnlLoslegen: TPanel
+      Left = 1
+      Top = 1
+      Width = 346
+      Height = 127
+      Align = alClient
+      BevelOuter = bvNone
+      Color = 13750750
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
+      Font.Color = clMoneyGreen
+      Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 1
-      OnKeyPress = EdSeiteKeyPress
+      TabOrder = 2
+      ExplicitTop = 0
+      object Label5: TLabel
+        Left = 89
+        Top = 6
+        Width = 173
+        Height = 49
+        Caption = 'Trainieren'
+        Color = 6579300
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clMedGray
+        Font.Height = -35
+        Font.Name = 'Comic Sans MS'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = True
+        OnClick = TrainierenClick
+      end
+      object Label4: TLabel
+        Left = 95
+        Top = 9
+        Width = 173
+        Height = 49
+        Caption = 'Trainieren'
+        Color = 6579300
+        Font.Charset = ANSI_CHARSET
+        Font.Color = 176
+        Font.Height = -35
+        Font.Name = 'Comic Sans MS'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = True
+        OnClick = TrainierenClick
+      end
+      object pnlUebungsmodus: TPanel
+        Left = 206
+        Top = 77
+        Width = 114
+        Height = 36
+        Caption = #220'bungsmodus'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Comic Sans MS'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+      end
+      object pnlTrainieren: TPanel
+        Left = 15
+        Top = 77
+        Width = 114
+        Height = 36
+        Caption = 'Training'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Comic Sans MS'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        OnClick = TrainierenClick
+      end
     end
   end
   object MainMenu1: TMainMenu
-    Left = 176
-    Top = 29
+    Left = 8
+    Top = 13
     object MenSeitenwahl: TMenuItem
       Caption = '&Seite'
     end
@@ -332,6 +339,7 @@ object Rahmenfenster: TRahmenfenster
     end
     object Exit1: TMenuItem
       Caption = 'E&xit'
+      ShortCut = 27
       OnClick = Exit1Click
     end
   end

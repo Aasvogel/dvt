@@ -14,17 +14,14 @@ type
     LabUebungsseite: TLabel;
     LaUebWoAnz: TLabel;
     LabNullseite: TLabel;
-    Panel1: TPanel;
+    pnlLoslegen: TPanel;
     Label5: TLabel;
-    Label3: TLabel;
     Label4: TLabel;
     PanWortzahl: TPanel;
     LaWortZl: TLabel;
     EdWortzahl: TEdit;
     PanSeitenzahl: TPanel;
-    LabSeitEing: TLabel;
     LabSeite: TLabel;
-    EdSeitenzahl: TEdit;
     EdSeite: TEdit;
     MainMenu1: TMainMenu;
     MenSeitenwahl: TMenuItem;
@@ -42,6 +39,9 @@ type
     Vorgaben1: TMenuItem;
     DoppelwrterA2: TMenuItem;
     D1: TMenuItem;
+    pnlPanelholder: TPanel;
+    pnlTrainieren: TPanel;
+    pnlUebungsmodus: TPanel;
     procedure FormActivate(Sender: TObject);
     procedure TrainierenClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -73,6 +73,7 @@ type
     procedure Sprachenwahl;
     procedure Wortzahlwahl;
     procedure BeschriftungNullSeite;
+    procedure showPanel(toshow : TPanel);
   public
     ZLMenge: Integer;
     procedure MachSeitenmenu;
@@ -173,7 +174,7 @@ begin
       ShowMessage('Zahl eingeben!');
       exit;
     end;
-    PanSeitenzahl.visible:= false;
+    showPanel(pnlLoslegen);
     exit;
   end;
 end;
@@ -282,7 +283,7 @@ end;
 
 procedure TRahmenfenster.NeueSeiteneingabe(Sender: TObject);
 begin
-  PanSeitenzahl.visible:= true;
+  showPanel(PanSeitenzahl);
   EdSeite.SetFocus;
 end;
 
@@ -311,7 +312,7 @@ end;
 
 procedure TRahmenfenster.WortzahlClick(Sender: TObject);
 begin
-  PanWortzahl.visible:= true;
+  showPanel(PanWortzahl);
   Edwortzahl.Text := IntToStr(Vorgabenrekord.UebgWZl);
   EdWortzahl.SetFocus;
 end;
@@ -320,12 +321,12 @@ procedure TRahmenfenster.PanWortzahlClick(Sender: TObject);
 begin
   VorgabenRekord.UebgWZl:= StrToInt(EdWortzahl.Text);
   LaUebWoAnz.Caption:= EdWortzahl.Text+ ' Wörter trainieren';
-  PanWortzahl.visible:= false
+  showPanel(pnlLoslegen);
 end;
 
 procedure TRahmenfenster.Wortzahlwahl;
 begin
-  PanWortzahl.visible:= true;
+  showPanel(PanWortzahl);
   Edwortzahl.Text := IntToStr(Vorgabenrekord.UebgWZl);
   EdWortzahl.SetFocus;
 end;
@@ -347,7 +348,7 @@ begin
     except
       ShowMessage('Zahl eingeben!');
     end;
-    PanWortzahl.visible:= false;
+    showPanel(pnlLoslegen);
     LaUebWoAnz.Caption := IntToStr(VorgabenRekord.UebgWZl) + ' Wörter trainieren';
   end;
 end;
@@ -438,5 +439,13 @@ procedure TRahmenfenster.DLexikon1Click(Sender: TObject);
 begin
   LexikonD.Show
 end;
+
+procedure TRahmenfenster.showPanel(toshow : TPanel);
+begin
+  pnlLoslegen.Visible := pnlLoslegen =toshow;
+  PanWortzahl.Visible := PanWortzahl = toshow;
+  PanSeitenzahl.Visible := PanSeitenzahl = toshow;
+end;
+
 
 end.
