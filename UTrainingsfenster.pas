@@ -254,7 +254,7 @@ end;
 
 procedure TTrainingsfenster.AuswertungA;
 begin
-  If EdAWort.Text = Vorgabedaten.AWort then                    {if richtig:}
+  If Trim(EdAWort.Text) = Trim(Vorgabedaten.AWort) then                    {if richtig:}
   begin
     {OkSound;}
     f_zeigeKorrektesWortAn:= false;
@@ -276,7 +276,7 @@ end;
 
 procedure TTrainingsfenster.AuswertungD;
 begin
-  If EdDWort.Text = Vorgabedaten.DWort then                     {if richtig:}
+  If Trim(EdDWort.Text) = Trim(Vorgabedaten.DWort) then                     {if richtig:}
     begin
       {OkSound; }
       f_zeigeKorrektesWortAn:= false;
