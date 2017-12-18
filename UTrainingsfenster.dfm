@@ -42,6 +42,34 @@ object Trainingsfenster: TTrainingsfenster
     Height = 470
     Stretch = True
   end
+  object StriErgebnisse: TStringGrid
+    Left = 100
+    Top = 500
+    Width = 572
+    Height = 233
+    BorderStyle = bsNone
+    DefaultRowHeight = 22
+    FixedCols = 0
+    RowCount = 10
+    FixedRows = 0
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Comic Sans MS'
+    Font.Style = []
+    GridLineWidth = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine]
+    ParentFont = False
+    ScrollBars = ssNone
+    TabOrder = 1
+    Visible = False
+    ColWidths = (
+      10
+      146
+      159
+      75
+      163)
+  end
   object PaTraining: TPanel
     Left = 100
     Top = 500
@@ -135,34 +163,6 @@ object Trainingsfenster: TTrainingsfenster
       Text = 'EdDWort'
       OnKeyPress = EdDWortKeyPress
     end
-  end
-  object StriErgebnisse: TStringGrid
-    Left = 100
-    Top = 500
-    Width = 572
-    Height = 233
-    BorderStyle = bsNone
-    DefaultRowHeight = 22
-    FixedCols = 0
-    RowCount = 10
-    FixedRows = 0
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Comic Sans MS'
-    Font.Style = []
-    GridLineWidth = 0
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine]
-    ParentFont = False
-    ScrollBars = ssNone
-    TabOrder = 1
-    Visible = False
-    ColWidths = (
-      10
-      146
-      159
-      75
-      163)
   end
   object MainMenu1: TMainMenu
     Left = 74

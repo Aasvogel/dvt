@@ -74,6 +74,7 @@ var
   bEnglisch, bFranzsisch, bLatein, bTraining: Boolean;
   WortZl, BildNr: Integer;
   bAVorhanden, bDVorhanden: boolean;
+  f_unbekannteSpeichern : Boolean;
 
 {~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}
 
@@ -502,7 +503,9 @@ begin
   InfoListe.Add(InfoRekord);
   TInfoRekord(InfoListe.Items[0]).WriteToStream(Writer);
 
-  For ZL:= 0 to ZeroListe.Count-1 do TWortRekord(ZeroListe.Items[ZL]).WriteToStream(Writer);
+  For ZL:= 0 to ZeroListe.Count-1 do
+    TWortRekord(ZeroListe.Items[ZL]).WriteToStream(Writer);
+
   Writer.WriteListEnd;
   Writer.Free;
   Stream.Free;
@@ -693,7 +696,9 @@ begin
     size := FileSize(f);
     CloseFile(F);
     DateiWert := size;
-  except DateiWert:= 12345; end;
+  except
+    DateiWert:= 12345;
+  end;
 end;
 
 

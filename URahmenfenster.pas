@@ -65,6 +65,7 @@ type
     procedure DoppelwrterA1Click(Sender: TObject);
     procedure DoppelwrterD1Click(Sender: TObject);
     procedure DLexikon1Click(Sender: TObject);
+    procedure pnlUebungsmodusClick(Sender: TObject);
   private
     sTitel: String;
     procedure NeueSeiteneingabe(Sender: TObject);
@@ -74,6 +75,7 @@ type
     procedure Wortzahlwahl;
     procedure BeschriftungNullSeite;
     procedure showPanel(toshow : TPanel);
+    procedure doTrain(saveMistakes : Boolean);
   public
     ZLMenge: Integer;
     procedure MachSeitenmenu;
@@ -324,6 +326,11 @@ begin
   showPanel(pnlLoslegen);
 end;
 
+procedure TRahmenfenster.pnlUebungsmodusClick(Sender: TObject);
+begin
+  doTrain(false);
+end;
+
 procedure TRahmenfenster.Wortzahlwahl;
 begin
   showPanel(PanWortzahl);
@@ -358,14 +365,21 @@ end;
 
 procedure TRahmenfenster.TrainierenClick(Sender: TObject);
 begin
+  doTrain(true);
+end;
+
+procedure TRahmenfenster.doTrain(saveMistakes : Boolean);
+begin
   Case DateiWert(Dateiname) of
     12345:  ShowmessagePos(Dateiname+'" gibt es nicht', 400, 400);
     0:      ShowmessagePos(Dateiname+'" enthält keine Wörter', 400, 400);
     1..200: ShowmessagePos(Dateiname+'" ist leer', 400, 400);
   else
-    Trainingsfenster.Show;
+    begin
+      f_unbekannteSpeichern := saveMistakes;
+      Trainingsfenster.Show;
+    end;
   end;
-
 end;
 
 procedure TRahmenfenster.MenHilfeClick(Sender: TObject);

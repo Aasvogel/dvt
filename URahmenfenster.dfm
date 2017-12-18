@@ -122,10 +122,6 @@ object Rahmenfenster: TRahmenfenster
       TabOrder = 0
       Visible = False
       OnClick = PanWortzahlClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 348
-      ExplicitHeight = 129
       object LaWortZl: TLabel
         Left = 87
         Top = 19
@@ -167,10 +163,6 @@ object Rahmenfenster: TRahmenfenster
       Color = 9145227
       TabOrder = 1
       Visible = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 353
-      ExplicitHeight = 129
       object LabSeite: TLabel
         Left = 114
         Top = 48
@@ -214,7 +206,6 @@ object Rahmenfenster: TRahmenfenster
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitTop = 0
       object Label5: TLabel
         Left = 89
         Top = 6
@@ -262,6 +253,7 @@ object Rahmenfenster: TRahmenfenster
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        OnClick = pnlUebungsmodusClick
       end
       object pnlTrainieren: TPanel
         Left = 15

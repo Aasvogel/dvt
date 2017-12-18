@@ -46,7 +46,7 @@ type
     procedure NullSeitenAnzeige;
     procedure AuswertungA;
     procedure AuswertungD;
-    procedure InFehlwortListe(FWort: String);
+    procedure InFehlwortListe(p_Wort: String);
     procedure InZeroListe;
     procedure Trainingsvorgabe;
     procedure Trainingweiter;
@@ -78,15 +78,19 @@ begin
   LaKAWort.Caption:= ''; LaKDWort.Caption:= '';
   If not bTraining then        //Trainingsprozess inaktiv
   begin
+    LaNullSeite.Visible := f_unbekannteSpeichern;
+
     ErgebnisseUndDateiLaden(Dateiname);
     With VorgabenRekord do
     begin
       If Sprache = 'e' then SeiteNr:= SeitArrE[1];
       If Sprache = 'f' then SeiteNr:= SeitArrF[1];
     end;
+
     ZeigCaption;
-      Bilderwahl;
+    Bilderwahl;
     MachAuswahlreihe;
+
     If SeiteNr <> 0 then
     begin
       FalschwortZL:= 0;
@@ -169,7 +173,14 @@ procedure TTrainingsfenster.NullSeitenAnzeige;
 var
   ZeroC: Integer;
 begin
-  If Zeroliste.Count-1 <0 then ZeroC:= 0 else ZeroC:= Zeroliste.Count-1;
+  if not f_unbekannteSpeichern then
+    exit;
+
+  If Zeroliste.Count-1 <0 then
+    ZeroC:= 0
+  else
+    ZeroC:= Zeroliste.Count-1;
+
   LaNullSeite.Caption:= 'NullSeite: '+IntToStr(ZeroC)+' Wörter  ';
 end;
 
@@ -192,11 +203,14 @@ begin
       end;
     until (ArbeitsZL = UebungsZL);
   except
-    ShowMessage('Auswahlreihe kann nicht erstellt werden'); Halt;
+    ShowMessage('Auswahlreihe kann nicht erstellt werden');
+    Halt;
   end;
   For Loop := 1 to 40 do             {Fehlwortarraylöschen}
-    begin Fehlwortarr[Loop].Fehlwort:= '';
-    FehlwortArr[Loop].FehlZL:= 0; end;
+  begin
+    Fehlwortarr[Loop].Fehlwort:= '';
+    FehlwortArr[Loop].FehlZL:= 0;
+  end;
   WortZl:= ArbeitsZL    {WortZL: UTrainingbildfenster, private}
 end;
 
@@ -268,7 +282,8 @@ begin
       f_zeigeKorrektesWortAn:= false;
       UpdateAuswahlreihe;
     end
-  else begin                                                    {if falsch:}
+  else
+  begin                                                    {if falsch:}
     {FalseSound; }
     inc(FalschWortZl);
     InFehlwortListe(Vorgabedaten.DWort);
@@ -311,8 +326,15 @@ begin
   ZeigErgebnisse;
   Rahmenfenster.MachSeitenmenu;
   ErgebnisseUndDateiSpeichern(SeiteNr);
-  If ZeroListe.Count < 1 then NullseiteLeerSpeichern else
-  NullseiteAusZerolisteSpeichern;
+
+  if f_unbekannteSpeichern then
+  begin
+    If ZeroListe.Count < 1 then
+      NullseiteLeerSpeichern
+    else
+      NullseiteAusZerolisteSpeichern;
+  end;
+
   bTraining:= false;           //Trainingsprozess inaktiv
   close;
 end;
@@ -337,34 +359,52 @@ begin
 end;
 
 
-procedure TTrainingsfenster.InFehlwortListe(FWort: String);
+procedure TTrainingsfenster.InFehlwortListe(p_Wort: String);
 var
   Anz: Integer;
 begin
   Anz:= 1;
-  Repeat                                                    //bereits falsch geübt, also inc FehlZL
-    If (FWort<>'') and (FWort = FehlWortArr[Anz].Fehlwort) then
-    begin inc(FehlWortArr[Anz].FehlZL);
-      FWort:= '';
-    end;                                                    //neu falsch geübt, wird angehängt
-    If (FWort<>'') and (FehlWortArr[Anz].Fehlwort = '') then
+  Repeat
+
+    //bereits falsch geübt, also inc FehlZL
+    If (p_Wort<>'') and (p_Wort = FehlWortArr[Anz].Fehlwort) then
     begin
-      FehlWortArr[Anz].Fehlwort:= FWort; FWort:= '';
+      inc(FehlWortArr[Anz].FehlZL);
+      p_Wort:= '';
+    end;
+
+    //neu falsch geübt, wird angehängt
+    If (p_Wort<>'') and (FehlWortArr[Anz].Fehlwort = '') then
+    begin
+      FehlWortArr[Anz].Fehlwort:= p_Wort;
+      p_Wort:= '';
+
       If FehlwortArr[Anz].FehlZL > FehlwortListenZl then
         MaxFehlwort:= FehlwortArr[Anz].Fehlwort;            //FehlSieger gesucht
       inc(FehlWortArr[Anz].FehlZL);
     end;
-      If (FWort<>'')and(FehlwortArr[Anz].FehlZL > FehlwortListenZl) then
-      begin FehlwortListenZl := FehlwortArr[Anz].FehlZL;
-        MaxFehlwort:= FehlwortArr[Anz].Fehlwort;             //Höchste Fehlerzahl gesucht
-      end;
+
+    If (p_Wort<>'')and(FehlwortArr[Anz].FehlZL > FehlwortListenZl) then
+    begin
+      FehlwortListenZl := FehlwortArr[Anz].FehlZL;
+      MaxFehlwort:= FehlwortArr[Anz].Fehlwort;             //Höchste Fehlerzahl gesucht
+    end;
+
     inc(Anz);
+
   until (FehlWortArr[Anz-1].Fehlwort = '') or (Anz = 39);
 end;
 
 
 procedure TTrainingsfenster.InZeroListe;
+
+var
+  wortInListe : TWortRekord;
+
 begin
+  if not f_unbekannteSpeichern then
+    exit;
+
   If Zeroliste = nil then Zeroliste := TList.Create;
   If ZeroListe.Count = 0 then
   begin
@@ -373,6 +413,15 @@ begin
     ZeroDatenRekord.DWort:= '';          {Das Null-Item bleibt leer:}
     ZeroListe.Add(ZeroDatenRekord);      {Leeranzeige, wenn Einträge über- oder unterschritten werden}
   end;
+
+  // Ist das Wort schon vorhanden kommt es nicht nochmal dazu!
+  for wortInListe in Zeroliste do
+  begin
+    if (wortInListe.AWort = Vorgabedaten.AWort) and
+       (wortInListe.DWort = Vorgabedaten.DWort) then
+    exit;
+  end;
+
   If Zeroliste.Count <= VorgabenRekord.UebgWZl then
   begin
     ZeroDatenRekord:= TWortRekord.Create;
