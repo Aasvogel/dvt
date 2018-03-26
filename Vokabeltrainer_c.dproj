@@ -104,7 +104,6 @@
         <DCCReference Include="UdoppelwortfensterD.pas">
             <Form>DoppelwortfensterD</Form>
         </DCCReference>
-        <DCCReference Include="Unit1.pas"/>
         <DCCReference Include="UService.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>

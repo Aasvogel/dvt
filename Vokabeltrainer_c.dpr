@@ -11,7 +11,6 @@ uses
   UDatSuchFenster in 'UDatSuchFenster.pas' {InDatSuchFenster},
   UDoppelwortfenster in 'UDoppelwortfenster.pas' {Doppelwortfenster},
   UdoppelwortfensterD in 'UdoppelwortfensterD.pas' {DoppelwortfensterD},
-  Unit1 in 'Unit1.pas',
   UService in 'UService.pas';
 
 {$R *.res}
