@@ -498,8 +498,12 @@ end;
 procedure TTrainingsfenster.NullseitenTrainingsEnde;
 begin
   PaTraining.Visible:= false;  //Trainingspanel wird ausgeblendet
-  If MessageDlgPos('Nullseite behalten?',mtConfirmation, [mbNo, mbYes], 0, 200, 500) <> mrYes // 0, 100, 700  => 21' Monitor
-    then NullSeiteLeerSpeichern;
+
+  if Application.MessageBox(PChar('Nullseite löschen?'), 'Nullseite löschen?',
+    MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) = IDYES then
+
+//  If MessageDlgPos('Nullseite behalten?',mtConfirmation, [mbNo, mbYes], 0, 200, 500) <> mrYes then // 0, 100, 700  => 21' Monitor
+  //  NullSeiteLeerSpeichern;
   close;
   bTraining:= false;           //Trainingsprozess inaktiv
   Geuebt:= true;
